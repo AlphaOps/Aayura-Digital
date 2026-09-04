@@ -3,6 +3,6 @@
   "version": "1.0.0",
   "description": "Netlify serverless functions for Aayura Digital Solutions",
   "dependencies": {
-    "razorpay": "^2.9.4"
+    "cashfree-pg": "^6.0.5"
   }
 }
