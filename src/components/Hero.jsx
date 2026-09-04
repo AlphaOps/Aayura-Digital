@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from './Button';
+import { useEnquiry } from '../context/EnquiryContext';
 import './Hero.css';
 
 // Check both hero/ subfolder and website-images/ root folder
@@ -8,6 +9,7 @@ const heroImagePrimary = new URL('../assets/website-images/hero/student-ambassad
 const heroImageSecondary = new URL('../assets/website-images/student-ambassadors.jpg', import.meta.url).href;
 
 export const Hero = () => {
+  const { openEnquiry } = useEnquiry();
   const [imgSrc, setImgSrc] = useState(heroImagePrimary);
   const [imageError, setImageError] = useState(false);
 
@@ -49,7 +51,7 @@ export const Hero = () => {
               
               <div className="hero-actions animate-fade-in" style={{ animationDelay: '0.3s' }}>
                 <a href="#domains" className="btn btn-primary btn-lg hero-btn">Explore Programs &rarr;</a>
-                <a href="#process" className="btn btn-outline btn-lg hero-btn">Enquiry Now</a>
+                <button onClick={() => openEnquiry()} className="btn btn-outline btn-lg hero-btn">Enquiry Now</button>
               </div>
               
               <div className="hero-trust-box animate-fade-in" style={{ animationDelay: '0.4s' }}>

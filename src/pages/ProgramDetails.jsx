@@ -4,11 +4,13 @@ import { Section } from '../components/Section';
 import { SectionHeading } from '../components/SectionHeading';
 import { PROGRAM_DOMAINS } from '../data/programsData';
 import { FAQAccordion } from '../components/FAQAccordion';
+import { useEnquiry } from '../context/EnquiryContext';
 import './ProgramDetails.css';
 import './ProgramDetailsPricing.css';
 
 export const ProgramDetails = () => {
   const { slug } = useParams();
+  const { openEnquiry } = useEnquiry();
   
   // Find program by slug, or fallback to first
   const program = PROGRAM_DOMAINS.find(p => p.id === slug) || PROGRAM_DOMAINS[0];
@@ -58,6 +60,9 @@ export const ProgramDetails = () => {
               <Link to={`/apply?program=${program.id}`} className="prog-apply-primary">
                 Apply Now &rarr;
               </Link>
+              <button onClick={() => openEnquiry(program.id)} className="prog-curriculum-btn" style={{ background: 'transparent', cursor: 'pointer', fontFamily: 'inherit' }}>
+                Enquiry Now
+              </button>
               <a href="#curriculum" className="prog-curriculum-btn">
                 Download Curriculum
               </a>

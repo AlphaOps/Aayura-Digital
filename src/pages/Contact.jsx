@@ -24,12 +24,14 @@ export const Contact = () => {
     setSubmitError(false);
 
     const payload = {
+      formType: "Contact Us",
       fullName: formData.name,
       email: formData.email,
       phone: formData.phone,
       inquiryType: formData.subject,
       message: formData.message,
-      source: "Website Contact Form"
+      source: "Website Contact Form",
+      submittedAt: new Date().toISOString()
     };
 
     console.log("Sending to Google Sheet:", payload);

@@ -9,11 +9,14 @@ import { Apply } from './pages/Apply';
 import { Register } from './pages/Register';
 import { Contact } from './pages/Contact';
 import { SocialProofPopup } from './components/SocialProofPopup';
+import { EnquiryProvider } from './context/EnquiryContext';
+import { EnquiryModal } from './components/EnquiryModal';
 import './App.css';
 
 function App() {
   return (
-    <BrowserRouter>
+    <EnquiryProvider>
+      <BrowserRouter>
       <Routes>
         <Route element={<Layout />}>
           <Route path="/" element={<Home />} />
@@ -28,7 +31,9 @@ function App() {
         </Route>
       </Routes>
       <SocialProofPopup />
+      <EnquiryModal />
     </BrowserRouter>
+    </EnquiryProvider>
   );
 }
 
