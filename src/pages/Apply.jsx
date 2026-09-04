@@ -229,7 +229,7 @@ export const Apply = () => {
                   </div>
                   
                   <Link 
-                    to={`/register?domain=${program.id}&duration=${dur.value}&batch=${defaultBatch.id}&price=${dur.price}`} 
+                    to={`/register?domain=${program.id}&batch=${defaultBatch.id}&plan=${dur.value}`} 
                     className="btn btn-primary tdur-register-btn"
                   >
                     {dur.cta}

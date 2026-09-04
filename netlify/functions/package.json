@@ -1,0 +1,8 @@
+{
+  "name": "aayura-netlify-functions",
+  "version": "1.0.0",
+  "description": "Netlify serverless functions for Aayura Digital Solutions",
+  "dependencies": {
+    "razorpay": "^2.9.4"
+  }
+}

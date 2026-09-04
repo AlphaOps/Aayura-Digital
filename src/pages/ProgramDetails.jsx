@@ -3,6 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import { Section } from '../components/Section';
 import { SectionHeading } from '../components/SectionHeading';
 import { PROGRAM_DOMAINS } from '../data/programsData';
+import { internshipPlans } from '../data/internshipPlans';
 import { FAQAccordion } from '../components/FAQAccordion';
 import { useEnquiry } from '../context/EnquiryContext';
 import './ProgramDetails.css';
@@ -25,15 +26,18 @@ export const ProgramDetails = () => {
   const formattedFaqs = program.faqs.map(f => ({ question: f.q, answer: f.a }));
 
   const PRICING_TIERS = [
-    { duration: '2 Weeks', badge: 'Starter', price: 89, value: '2-weeks' },
-    { duration: '4 Weeks', badge: 'Popular', price: 179, value: '4-weeks' },
-    { duration: '6 Weeks', badge: 'Best Value', price: 199, value: '6-weeks' },
-    { duration: '8 Weeks', badge: 'Trending', price: 249, value: '8-weeks' },
-    { duration: '12 Weeks', badge: 'Most Popular', price: 299, value: '12-weeks' },
-    { duration: '16 Weeks', badge: 'Recommended', price: 329, value: '16-weeks' },
-    { duration: '24 Weeks', badge: 'Premium', price: 529, value: '24-weeks' },
-    { duration: '36 Weeks', badge: 'Elite', price: 729, value: '36-weeks' }
-  ];
+    { badge: 'Starter', value: '2-weeks' },
+    { badge: 'Popular', value: '4-weeks' },
+    { badge: 'Best Value', value: '6-weeks' },
+    { badge: 'Trending', value: '8-weeks' },
+    { badge: 'Most Popular', value: '12-weeks' },
+    { badge: 'Recommended', value: '16-weeks' },
+    { badge: 'Premium', value: '24-weeks' }
+  ].map(tier => ({
+    ...tier,
+    duration: internshipPlans[tier.value].duration,
+    price: internshipPlans[tier.value].price
+  }));
 
   return (
     <div className="program-details-page">
@@ -150,7 +154,7 @@ export const ProgramDetails = () => {
                   <span className="price-currency">₹</span>
                   <span className="price-amount">{tier.price}</span>
                 </div>
-                <Link to={`/apply?program=${program.id}&duration=${tier.value}&price=${tier.price}`} className="btn btn-primary pricing-enroll-btn">
+                <Link to={`/register?domain=${program.id}&plan=${tier.value}`} className="btn btn-primary pricing-enroll-btn">
                   Enroll Now
                 </Link>
               </div>

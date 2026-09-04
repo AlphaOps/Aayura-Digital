@@ -1,13 +1,32 @@
 import React, { useState, useEffect } from 'react';
-import { useSearchParams, Link } from 'react-router-dom';
+import { useSearchParams, Link, Navigate, useNavigate } from 'react-router-dom';
 import { PROGRAM_DOMAINS, BATCHES_DATA } from '../data/programsData';
-import { load } from '@cashfreepayments/cashfree-js';
+import { internshipPlans } from '../data/internshipPlans';
 import './Register.css';
+
+// Dynamically load Razorpay script
+const loadRazorpayScript = () => {
+  return new Promise((resolve) => {
+    if (window.Razorpay) {
+      resolve(true);
+      return;
+    }
+    const script = document.createElement('script');
+    script.src = 'https://checkout.razorpay.com/v1/checkout.js';
+    script.onload = () => resolve(true);
+    script.onerror = () => resolve(false);
+    document.body.appendChild(script);
+  });
+};
 
 export const Register = () => {
   const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
   const initialDomain = searchParams.get('program') || searchParams.get('domain') || 'artificial-intelligence-machine-learning';
   const initialBatch = searchParams.get('batch') || 'sep-batch';
+  const planId = searchParams.get('plan');
+
+  const selectedPlan = internshipPlans[planId];
 
   const [formData, setFormData] = useState({
     fullName: '',
@@ -21,19 +40,13 @@ export const Register = () => {
 
   const [isProcessing, setIsProcessing] = useState(false);
   const [submittedAppId, setSubmittedAppId] = useState(null);
-  const [cashfree, setCashfree] = useState(null);
 
   const selectedDomainObj = PROGRAM_DOMAINS.find(p => p.id === formData.domain) || PROGRAM_DOMAINS[0];
-  const totalAmount = 179;
+  const totalAmount = selectedPlan ? selectedPlan.price : 0;
 
-  useEffect(() => {
-    // Initialize Cashfree SDK
-    load({
-      mode: "sandbox"
-    }).then((cf) => {
-      setCashfree(cf);
-    });
-  }, []);
+  if (!selectedPlan) {
+    return <Navigate to="/programs" replace />;
+  }
 
   const handlePayment = async (e) => {
     e.preventDefault();
@@ -43,82 +56,103 @@ export const Register = () => {
     }
 
     setIsProcessing(true);
-    console.log("Frontend: Submitting payment request...");
     try {
+      const resLoaded = await loadRazorpayScript();
+      if (!resLoaded) {
+        alert("Razorpay SDK failed to load. Are you online?");
+        setIsProcessing(false);
+        return;
+      }
+
       // 1. Create order on our backend
-      console.log("Frontend: Fetching http://localhost:5001/api/create-order");
-      const res = await fetch('http://localhost:5001/api/create-order', {
+      const res = await fetch('/.netlify/functions/create-razorpay-order', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          order_amount: totalAmount,
+          planId: planId,
           customer_details: {
-            customer_id: `CUST_${Date.now()}`,
             customer_name: formData.fullName,
             customer_email: formData.email,
             customer_phone: formData.phone
-          },
-          order_meta: {
-            return_url: `http://localhost:4000/apply?success=true&order_id={order_id}`
           }
         })
       });
 
-      console.log("Frontend: HTTP Response Status:", res.status);
-      const orderData = await res.json();
-      console.log("Frontend: Backend Response Body:", orderData);
+      if (!res.ok) {
+        throw new Error('Failed to create order');
+      }
 
-      if (orderData.payment_session_id && cashfree) {
-        // 2. Open Cashfree Checkout
-        console.log("Frontend: Initializing Cashfree checkout with session:", orderData.payment_session_id);
-        const checkoutOptions = {
-          paymentSessionId: orderData.payment_session_id,
-          redirectTarget: "_self"
+      const orderData = await res.json();
+
+      if (orderData.id) {
+        // 2. Open Razorpay Checkout
+        const options = {
+          key: import.meta.env.VITE_RAZORPAY_KEY_ID || '', // Enter the Key ID generated from the Dashboard
+          amount: orderData.amount,
+          currency: "INR",
+          name: "Aayura Digital Solutions",
+          description: `${selectedPlan.duration} Professional Internship Program`,
+          order_id: orderData.id,
+          handler: async function (response) {
+            setIsProcessing(true);
+            try {
+              // 3. Verify Payment Signature
+              const verifyRes = await fetch('/.netlify/functions/verify-payment', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                  razorpay_payment_id: response.razorpay_payment_id,
+                  razorpay_order_id: response.razorpay_order_id,
+                  razorpay_signature: response.razorpay_signature,
+                  applicationData: {
+                    ...formData,
+                    planId,
+                    planDuration: selectedPlan.duration,
+                    planPrice: selectedPlan.price
+                  }
+                })
+              });
+              
+              if (verifyRes.ok) {
+                const generatedId = `AYR-2026-${Math.floor(1000 + Math.random() * 9000)}`;
+                setSubmittedAppId(generatedId);
+              } else {
+                alert("Payment verification failed on the server. Please contact support.");
+              }
+            } catch (err) {
+              console.error("Verification error:", err);
+              alert("Error verifying payment.");
+            } finally {
+              setIsProcessing(false);
+            }
+          },
+          prefill: {
+            name: formData.fullName,
+            email: formData.email,
+            contact: formData.phone
+          },
+          theme: {
+            color: "#7C4DDB"
+          }
         };
-        cashfree.checkout(checkoutOptions);
+
+        const rzp1 = new window.Razorpay(options);
+        rzp1.on('payment.failed', function (response){
+          console.error("Payment Failed:", response.error);
+          alert("Payment Failed. Please try again.");
+          setIsProcessing(false);
+        });
+        rzp1.open();
       } else {
-        console.error("Frontend Error: payment_session_id is missing or cashfree SDK not loaded.", { orderData, cashfreeLoaded: !!cashfree });
-        alert("Failed to initialize payment gateway. Check console.");
+        alert("Failed to initialize payment gateway.");
         setIsProcessing(false);
       }
     } catch (error) {
-      console.error("Frontend Payment fetch error:", error);
-      alert("Something went wrong. Check console.");
+      console.error("Payment flow error:", error);
+      alert("Something went wrong. Please check your connection.");
       setIsProcessing(false);
     }
   };
-
-  // Handle return from Cashfree (Check for success in URL)
-  useEffect(() => {
-    const success = searchParams.get('success');
-    const orderId = searchParams.get('order_id');
-    
-    if (success === 'true' && orderId) {
-      // Very simple frontend check. In a real app, verify via backend again!
-      // Here we simulate the backend verify endpoint call:
-      fetch('http://localhost:5001/api/verify-payment', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ order_id: orderId })
-      })
-      .then(res => res.json())
-      .then(data => {
-        if(data && (data.length > 0 && data[0].payment_status === 'SUCCESS' || data.order_status === 'PAID')) {
-          const generatedId = `AYR-2026-${Math.floor(1000 + Math.random() * 9000)}`;
-          setSubmittedAppId(generatedId);
-        } else {
-          // If using just redirect without backend verify, we'll just show success for demo
-          const generatedId = `AYR-2026-${Math.floor(1000 + Math.random() * 9000)}`;
-          setSubmittedAppId(generatedId);
-        }
-      })
-      .catch(() => {
-        // Fallback for demo
-        const generatedId = `AYR-2026-${Math.floor(1000 + Math.random() * 9000)}`;
-        setSubmittedAppId(generatedId);
-      });
-    }
-  }, [searchParams]);
 
   // SUCCESS SCREEN
   if (submittedAppId) {
@@ -161,8 +195,8 @@ export const Register = () => {
           </div>
 
           <div className="summary-content">
-            <span className="summary-eyebrow">4 Weeks – Virtual Internship Program</span>
-            <h1 className="summary-title">Professional Internship Program</h1>
+            <span className="summary-eyebrow">{selectedPlan.duration} – Virtual Internship Program</span>
+            <h1 className="summary-title">{selectedPlan.title}</h1>
             <p className="summary-desc">
               Gain practical industry experience through structured projects, guided workflows and real-world deliverables.
             </p>
@@ -210,7 +244,7 @@ export const Register = () => {
           <div className="order-summary-box">
             <div>
               <div className="order-prog-label">Program</div>
-              <div className="order-prog-name">4 Weeks Professional Internship</div>
+              <div className="order-prog-name">{selectedPlan.duration} Professional Internship</div>
             </div>
             <div className="order-amount">
               <div className="order-prog-label">Amount</div>
