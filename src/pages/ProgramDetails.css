@@ -1,0 +1,426 @@
+/* Program Details Page Styles */
+
+.program-details-page {
+  padding-bottom: 80px; /* Space for mobile sticky CTA */
+}
+
+.prog-section {
+  padding-top: var(--space-3xl);
+  padding-bottom: var(--space-3xl);
+}
+
+/* 1. Hero Section */
+.program-hero {
+  padding-top: 140px;
+  padding-bottom: var(--space-3xl);
+  background: var(--gradient-soft);
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-2xl);
+  align-items: center;
+}
+
+.prog-hero-top {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: var(--space-lg);
+}
+
+.batch-pill {
+  display: inline-flex;
+  align-items: center;
+  background: var(--gradient-cta);
+  color: #FFFFFF;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  padding: 6px 16px;
+  border-radius: var(--radius-pill);
+  white-space: nowrap;
+  width: fit-content;
+  box-shadow: 0 4px 12px rgba(124, 77, 219, 0.25);
+}
+
+@media (max-width: 540px) {
+  .batch-pill {
+    font-size: 0.75rem;
+    padding: 6px 14px;
+    margin: 0 auto;
+  }
+}
+
+.prog-hero-badge {
+  display: inline-block;
+  padding: 6px 14px;
+  border-radius: var(--radius-pill);
+  border: 1px solid;
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.prog-hero-title {
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  line-height: 1.1;
+  color: var(--text-dark);
+  margin-bottom: var(--space-lg);
+}
+
+.prog-hero-sub {
+  font-size: 1.15rem;
+  color: var(--text-secondary);
+  margin-bottom: var(--space-xl);
+  max-width: 90%;
+}
+
+.prog-hero-ctas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-md);
+}
+
+.prog-apply-primary {
+  background: var(--prog-accent);
+  color: #fff;
+  padding: 14px 28px;
+  border-radius: var(--radius-pill);
+  font-weight: 700;
+  font-size: 1.05rem;
+  transition: transform 0.2s, box-shadow 0.2s;
+  border: 1px solid var(--prog-accent);
+}
+
+.prog-apply-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-sm);
+}
+
+.prog-curriculum-btn {
+  background: transparent;
+  color: #fff;
+  padding: 14px 28px;
+  border-radius: var(--radius-pill);
+  font-weight: 600;
+  font-size: 1.05rem;
+  border: 1px solid var(--border-subtle);
+  transition: all 0.2s;
+}
+
+.prog-curriculum-btn:hover {
+  background: #FFFFFF;
+  border-color: var(--border-subtle);
+  color: var(--text-dark);
+}
+
+.prog-hero-visual {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.prog-visual-card {
+  width: 100%;
+  aspect-ratio: 4/3;
+  border-radius: var(--radius-xl);
+  border: 1px solid;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--shadow-md);
+  background: #FFFFFF;
+}
+
+.huge-icon {
+  font-size: 8rem;
+}
+
+/* 2. Overview */
+.overview-content .lead-p {
+  font-size: 1.2rem;
+  color: var(--text-secondary);
+  line-height: 1.7;
+  max-width: 900px;
+}
+
+/* 3. Curriculum Roadmap */
+.curriculum-timeline {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.curriculum-module-card {
+  background: var(--bg-primary);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: var(--space-lg);
+  border-left: 4px solid var(--prog-accent);
+}
+
+.module-index {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.module-title {
+  font-size: 1.25rem;
+  color: var(--text-dark);
+  margin-bottom: 8px;
+}
+
+.module-desc {
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+/* 4. Tools & Tech */
+.tech-badge-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-md);
+  margin-top: var(--space-xl);
+}
+
+.tech-large-badge {
+  background: var(--bg-primary);
+  border: 1px solid var(--border-subtle);
+  padding: 12px 24px;
+  border-radius: var(--radius-pill);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-dark);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* 5. Projects */
+.example-projects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: var(--space-xl);
+}
+
+.example-project-card {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: var(--space-xl);
+  transition: transform 0.3s ease;
+}
+
+.example-project-card:hover {
+  transform: translateY(-5px);
+  border-color: var(--prog-accent);
+}
+
+.project-card-title {
+  font-size: 1.3rem;
+  color: var(--text-dark);
+  margin-bottom: 12px;
+}
+
+.project-card-desc {
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  margin-bottom: var(--space-lg);
+}
+
+.deliverable-box {
+  background: var(--bg-tertiary);
+  padding: 12px;
+  border-radius: var(--radius-sm);
+  font-size: 0.85rem;
+}
+
+.deliv-label {
+  color: var(--text-secondary);
+  display: block;
+  margin-bottom: 4px;
+}
+
+.deliv-val {
+  color: var(--prog-accent);
+  font-weight: 700;
+}
+
+/* 6. Careers */
+.career-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: var(--space-md);
+}
+
+.career-card {
+  background: var(--bg-primary);
+  border: 1px solid var(--border-subtle);
+  padding: 16px;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-weight: 600;
+  color: var(--text-dark);
+}
+
+/* 7. Highlights */
+.highlights-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: var(--space-xl);
+}
+
+.highlight-card {
+  text-align: center;
+}
+
+.hl-icon {
+  font-size: 2.5rem;
+  margin-bottom: var(--space-md);
+}
+
+.highlight-card h4 {
+  font-size: 1.1rem;
+  color: #fff;
+  margin-bottom: 8px;
+}
+
+.highlight-card p {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+}
+
+/* 8. Who Should Join */
+.who-card {
+  background: var(--bg-primary);
+  border: 1px solid var(--border-subtle);
+  padding: var(--space-2xl);
+  border-radius: var(--radius-lg);
+}
+
+.who-list {
+  list-style: none;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: var(--space-md);
+}
+
+.who-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  font-size: 1.05rem;
+}
+
+.check-bullet {
+  color: var(--prog-accent);
+  font-weight: bold;
+}
+
+/* 10. Final CTA */
+.final-prog-cta {
+  padding: var(--space-3xl) 0;
+}
+
+.final-prog-cta h2 {
+  font-size: 2.5rem;
+}
+
+.final-prog-cta p {
+  font-size: 1.1rem;
+  margin-bottom: var(--space-2xl);
+}
+
+.final-cta-btns {
+  display: flex;
+  justify-content: center;
+  gap: var(--space-md);
+  flex-wrap: wrap;
+}
+
+/* Mobile Sticky Bar */
+.prog-mobile-sticky-bar {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: rgba(13, 14, 21, 0.95);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-top: 1px solid var(--border-subtle);
+  padding: 12px var(--space-md);
+  z-index: 999;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.4);
+}
+
+.sticky-domain {
+  display: block;
+  font-weight: 700;
+  color: #fff;
+  font-size: 0.9rem;
+}
+
+.sticky-sub {
+  display: block;
+  font-size: 0.75rem;
+  color: #00fa9a;
+}
+
+.sticky-apply-btn {
+  background: var(--prog-accent, var(--accent-primary));
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: var(--radius-pill);
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+
+/* Mobile Adjustments */
+@media (max-width: 768px) {
+  .hero-split {
+    grid-template-columns: 1fr;
+  }
+  
+  .prog-hero-top {
+    justify-content: center;
+  }
+  
+  .prog-hero-title, .prog-hero-sub {
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  .prog-hero-title {
+    font-size: 2.5rem;
+  }
+  
+  .prog-hero-ctas {
+    flex-direction: column;
+  }
+  
+  .prog-hero-ctas a {
+    text-align: center;
+  }
+  
+  .prog-mobile-sticky-bar {
+    display: flex;
+  }
+}

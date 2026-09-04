@@ -1,0 +1,87 @@
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-main);
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border-radius: var(--radius-sm);
+  text-align: center;
+}
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Mobile-first touch target rule */
+.btn-sm {
+  padding: 8px 16px;
+  font-size: 0.875rem;
+  min-height: 40px; /* Although small, maintain a decent touch target */
+}
+
+.btn-md {
+  padding: 12px 24px;
+  font-size: 1rem;
+  min-height: var(--touch-target); /* 48px min height for mobile */
+}
+
+.btn-lg {
+  padding: 16px 32px;
+  font-size: 1.125rem;
+  min-height: 56px;
+}
+
+.btn-full {
+  width: 100%;
+}
+
+/* Variants */
+.btn-primary {
+  background: var(--gradient-cta);
+  color: #fff;
+  box-shadow: var(--shadow-sm);
+}
+
+.btn-primary:hover:not(:disabled) {
+  box-shadow: var(--shadow-glow);
+  transform: translateY(-2px);
+}
+
+.btn-secondary {
+  background-color: var(--accent-secondary);
+  color: #fff;
+}
+
+.btn-secondary:hover:not(:disabled) {
+  background-color: var(--accent-secondary-hover);
+}
+
+.btn-outline {
+  background: transparent;
+  color: var(--text-primary);
+  border: 1px solid var(--border-subtle);
+}
+
+.btn-outline:hover:not(:disabled) {
+  border-color: var(--accent-primary);
+  color: var(--accent-primary);
+}
+
+.btn-ghost {
+  background: transparent;
+  color: var(--text-secondary);
+}
+
+.btn-ghost:hover:not(:disabled) {
+  color: var(--text-primary);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+/* Smooth tap interactions on mobile */
+.btn:active:not(:disabled) {
+  transform: scale(0.98);
+}

@@ -1,0 +1,196 @@
+/* Global Design System - Maincrafts Technology */
+
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap');
+
+:root {
+  /* Color System */
+  --bg-primary: #FAFAFC; /* Premium light bg */
+  --bg-secondary: #F7F5FF; /* Very light lavender */
+  --bg-tertiary: #F1EDFF; /* Soft lavender */
+  --bg-white-section: #FFFFFF;
+  --bg-grey-section: #F7F5FF;
+  
+  --accent-primary: #7C4DDB; /* Primary Purple */
+  --accent-primary-hover: #9B6DFF;
+  --accent-secondary: #9B6DFF; /* Soft Purple */
+  --accent-secondary-hover: #B28CFF;
+  
+  --highlight-cyan: #7C4DDB; /* Map cyan to purple for consistency */
+  
+  --text-primary: #1F1F2E;
+  --text-secondary: #66667A;
+  --text-dark: #1F1F2E;
+  --text-dark-secondary: #66667A;
+  
+  --border-subtle: #E8E6EF;
+  --border-subtle-dark: #ECEAF2;
+  
+  /* Typography */
+  --font-main: 'Outfit', system-ui, sans-serif;
+  
+  /* Gradients */
+  --gradient-cta: linear-gradient(135deg, #7C4DDB, #9B6DFF);
+  --gradient-highlight: linear-gradient(135deg, #7C4DDB, #9B6DFF);
+  --gradient-soft: linear-gradient(135deg, #F7F3FF, #FFFFFF, #F3F8FF);
+  
+  /* Shadows */
+  --shadow-sm: 0 4px 12px rgba(80, 60, 120, 0.05);
+  --shadow-md: 0 8px 30px rgba(80, 60, 120, 0.08);
+  --shadow-glow: 0 8px 30px rgba(124, 77, 219, 0.15);
+  --shadow-light: 0 4px 12px rgba(80, 60, 120, 0.04);
+  
+  /* Spacing */
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+  --space-2xl: 48px;
+  --space-3xl: 64px;
+  
+  /* Radii */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+  --radius-xl: 32px;
+  --radius-pill: 9999px;
+  
+  /* Mobile-first touch targets */
+  --touch-target: 48px;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px; /* Base for rem */
+}
+
+body {
+  font-family: var(--font-main);
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+/* Typography */
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: var(--space-md);
+}
+
+h1 {
+  font-size: 2.5rem;
+  letter-spacing: -0.02em;
+}
+
+h2 {
+  font-size: 2rem;
+  letter-spacing: -0.01em;
+}
+
+h3 {
+  font-size: 1.5rem;
+}
+
+p {
+  margin-bottom: var(--space-md);
+  color: var(--text-secondary);
+}
+
+a {
+  color: var(--accent-primary);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+a:hover {
+  color: var(--accent-primary-hover);
+}
+
+/* Utility Classes */
+.text-gradient {
+  background: var(--gradient-highlight);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.flex-col {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Desktop overrides */
+@media (min-width: 768px) {
+  html {
+    font-size: 18px;
+  }
+  
+  h1 {
+    font-size: 3.5rem;
+  }
+  
+  h2 {
+    font-size: 2.5rem;
+  }
+}
+
+/* Animations & Micro-Interactions */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Smooth Page Transitions */
+.main-content > * {
+  animation: pageTransition 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes pageTransition {
+  0% { opacity: 0; transform: translateY(8px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+/* Tactile Button Press Micro-Interactions */
+button:active, 
+.btn:active, 
+a.btn:active, 
+.nav-apply-btn:active, 
+.prog-apply-primary:active, 
+.cta-btn-primary:active, 
+.form-submit-btn:active,
+.domain-btn-link:active,
+.batch-cta-btn:active,
+.mobile-cta-link-btn:active {
+  transform: scale(0.97) !important;
+}
+
+/* Accessible Focus States */
+:focus-visible {
+  outline: 2px solid var(--accent-primary);
+  outline-offset: 3px;
+}
+
+/* Selection Color */
+::selection {
+  background: var(--accent-primary);
+  color: #fff;
+}
+

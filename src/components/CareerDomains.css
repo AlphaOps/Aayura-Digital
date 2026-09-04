@@ -1,0 +1,283 @@
+/* Specialized Internship Tracks Section */
+
+.domains-section {
+  padding-top: var(--space-3xl);
+  padding-bottom: var(--space-3xl);
+  background: var(--bg-primary);
+  position: relative;
+}
+
+.domains-header {
+  max-width: 900px;
+  margin: 0 auto var(--space-2xl);
+}
+
+.domains-main-title {
+  font-size: clamp(2rem, 4vw, 2.75rem);
+  font-weight: 800;
+  color: #1F2937;
+  line-height: 1.25;
+  margin-bottom: var(--space-md);
+  letter-spacing: -0.02em;
+}
+
+.domains-main-subtitle {
+  font-size: 1.125rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  max-width: 720px;
+  margin: 0 auto var(--space-xl);
+}
+
+.domains-filter-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin: 0 auto;
+}
+
+.domains-filter-tab {
+  background: #FFFFFF;
+  border: 1px solid var(--border-subtle);
+  color: var(--text-secondary);
+  padding: 8px 18px;
+  border-radius: var(--radius-pill);
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  box-shadow: var(--shadow-sm);
+}
+
+.domains-filter-tab:hover {
+  border-color: var(--accent-primary);
+  color: var(--accent-primary);
+  transform: translateY(-1px);
+}
+
+.domains-filter-tab.active {
+  background: var(--accent-primary);
+  border-color: var(--accent-primary);
+  color: #FFFFFF;
+  box-shadow: 0 4px 14px rgba(124, 77, 219, 0.3);
+}
+
+/* 4-Column Responsive Grid */
+.domains-tracks-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 26px;
+  margin-top: var(--space-xl);
+}
+
+/* Individual Card */
+.track-card {
+  background: #FFFFFF;
+  border: 1px solid var(--border-subtle);
+  border-radius: 22px;
+  box-shadow: 0 4px 20px rgba(80, 60, 120, 0.04);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.track-card:hover {
+  transform: translateY(-6px);
+  border-color: rgba(124, 77, 219, 0.35);
+  box-shadow: 0 14px 38px rgba(124, 77, 219, 0.12);
+}
+
+.track-card-image-box {
+  width: 100%;
+  height: 200px;
+  position: relative;
+  overflow: hidden;
+  background: #F4F0FF;
+  border-bottom: 1px solid rgba(232, 230, 239, 0.6);
+}
+
+.track-card-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.track-card:hover .track-card-img {
+  transform: scale(1.04);
+}
+
+.track-card-body {
+  padding: 22px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.track-card-top-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+}
+
+.track-category-pill {
+  font-size: 0.725rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--accent-primary);
+  background: #F5EFFF;
+  border: 1px solid rgba(124, 77, 219, 0.2);
+  padding: 4px 12px;
+  border-radius: var(--radius-pill);
+}
+
+.track-number-badge {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: #D1D5DB;
+}
+
+.track-card-title {
+  font-size: 1.18rem;
+  font-weight: 700;
+  color: #1F2937;
+  margin-bottom: 6px;
+  line-height: 1.35;
+}
+
+.track-title-link {
+  color: inherit;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.track-title-link:hover {
+  color: var(--accent-primary);
+}
+
+.track-tech-subtitle {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #7C4DDB;
+  margin-bottom: 10px;
+  line-height: 1.4;
+}
+
+.track-card-description {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  line-height: 1.55;
+  margin-bottom: 22px;
+  flex-grow: 1;
+}
+
+.track-card-cta-row {
+  display: flex;
+  gap: 10px;
+  margin-top: auto;
+}
+
+.track-btn-apply {
+  flex: 1;
+  text-align: center;
+  padding: 11px 0;
+  font-size: 0.875rem;
+  font-weight: 700;
+  background: var(--gradient-cta);
+  color: #FFFFFF;
+  border-radius: var(--radius-pill);
+  text-decoration: none;
+  box-shadow: 0 4px 12px rgba(124, 77, 219, 0.25);
+  transition: all 0.2s ease;
+  border: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.track-btn-apply:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(124, 77, 219, 0.4);
+}
+
+.track-btn-groups {
+  flex: 1;
+  text-align: center;
+  padding: 11px 0;
+  font-size: 0.875rem;
+  font-weight: 600;
+  background: #FFFFFF;
+  color: #1F2937;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-pill);
+  text-decoration: none;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.track-btn-groups:hover {
+  background: #FAFAFC;
+  border-color: #CBD5E1;
+  color: var(--accent-primary);
+  transform: translateY(-2px);
+}
+
+/* Responsive Grid Breakpoints */
+@media (max-width: 1279px) {
+  .domains-tracks-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 22px;
+  }
+}
+
+@media (max-width: 991px) {
+  .domains-tracks-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+  
+  .track-card-image-box {
+    height: 190px;
+  }
+}
+
+@media (max-width: 640px) {
+  .domains-section {
+    padding-top: var(--space-2xl);
+    padding-bottom: var(--space-2xl);
+  }
+
+  .domains-tracks-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .track-card-image-box {
+    height: 200px;
+  }
+  
+  .track-card-body {
+    padding: 18px;
+  }
+  
+  .track-card-title {
+    font-size: 1.15rem;
+  }
+  
+  .track-card-cta-row {
+    flex-direction: row;
+    gap: 8px;
+  }
+  
+  .track-btn-apply,
+  .track-btn-groups {
+    padding: 12px 0;
+    font-size: 0.85rem;
+  }
+}
