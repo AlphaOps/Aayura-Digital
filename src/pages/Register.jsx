@@ -108,8 +108,21 @@ export const Register = () => {
     }
 
     setIsProcessing(true);
-    console.log(`[Meta Pixel] InitiateCheckout fired with value: ${totalAmount}`);
-    initiateCheckout({ value: totalAmount, currency: 'INR' });
+    
+    const metaCheckoutValue = Number(totalAmount);
+    console.log('[Meta Pixel] InitiateCheckout:', metaCheckoutValue);
+
+    if (
+      typeof window !== 'undefined' &&
+      typeof window.fbq === 'function' &&
+      Number.isFinite(metaCheckoutValue) &&
+      metaCheckoutValue > 0
+    ) {
+      window.fbq('track', 'InitiateCheckout', {
+        value: metaCheckoutValue,
+        currency: 'INR'
+      });
+    }
     
     try {
       // 1. Create Cashfree order on our backend
