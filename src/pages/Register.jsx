@@ -3,6 +3,7 @@ import { useSearchParams, Link, Navigate, useNavigate } from 'react-router-dom';
 import { PROGRAM_DOMAINS, BATCHES_DATA } from '../data/programsData';
 import { internshipPlans } from '../data/internshipPlans';
 import { load } from '@cashfreepayments/cashfree-js';
+import { viewContent, initiateCheckout, purchase } from '../utils/metaPixel';
 import './Register.css';
 
 export const Register = () => {
@@ -35,6 +36,14 @@ export const Register = () => {
   if (!selectedPlan) {
     return <Navigate to="/programs" replace />;
   }
+
+  // Fire ViewContent
+  useEffect(() => {
+    if (selectedPlan) {
+      console.log(`[Meta Pixel] ViewContent fired with value: ${selectedPlan.price}`);
+      viewContent({ value: selectedPlan.price, currency: 'INR' });
+    }
+  }, [planId]);
 
   // Initialize Cashfree SDK
   useEffect(() => {
@@ -76,6 +85,8 @@ export const Register = () => {
         if (data.success) {
           const generatedId = data.applicationId || `AYR-2026-${Math.floor(1000 + Math.random() * 9000)}`;
           setSubmittedAppId(generatedId);
+          console.log(`[Meta Pixel] Purchase fired with value: ${totalAmount}`);
+          purchase({ value: totalAmount, currency: 'INR' });
         } else {
           alert("Payment verification failed. Please contact support if amount was deducted.");
         }
@@ -97,6 +108,9 @@ export const Register = () => {
     }
 
     setIsProcessing(true);
+    console.log(`[Meta Pixel] InitiateCheckout fired with value: ${totalAmount}`);
+    initiateCheckout({ value: totalAmount, currency: 'INR' });
+    
     try {
       // 1. Create Cashfree order on our backend
       const res = await fetch('/.netlify/functions/create-cashfree-order', {
