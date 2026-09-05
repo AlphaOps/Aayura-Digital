@@ -102,6 +102,10 @@ export const Register = () => {
 
   const handlePayment = async (e) => {
     e.preventDefault();
+    
+    // Prevent duplicate events on double click
+    if (isProcessing) return;
+
     if (!formData.fullName || !formData.email || !formData.phone) {
       alert("Please fill all required fields");
       return;
@@ -109,8 +113,10 @@ export const Register = () => {
 
     setIsProcessing(true);
     
-    const metaCheckoutValue = Number(totalAmount);
-    console.log('[Meta Pixel] InitiateCheckout:', metaCheckoutValue);
+    const metaCheckoutValue = Number(String(totalAmount).replace(/[^0-9.]/g, ''));
+    console.log('[Meta Pixel DEBUG] totalAmount:', totalAmount);
+    console.log('[Meta Pixel DEBUG] metaCheckoutValue:', metaCheckoutValue);
+    console.log('[Meta Pixel DEBUG] selectedPlan:', selectedPlan);
 
     if (
       typeof window !== 'undefined' &&
@@ -119,6 +125,11 @@ export const Register = () => {
       metaCheckoutValue > 0
     ) {
       window.fbq('track', 'InitiateCheckout', {
+        value: metaCheckoutValue,
+        currency: 'INR'
+      });
+      
+      console.log('[Meta Pixel] InitiateCheckout sent:', {
         value: metaCheckoutValue,
         currency: 'INR'
       });
